@@ -691,12 +691,6 @@ function xmldb_local_email_upgrade($oldversion) {
         foreach ($deletetemplates as $deletename) {
             $DB->delete_records('email_template', ['name' => $deletename]);
             $DB->delete_records('email_templateset_templates', ['name' => $deletename]);
-            $DB->execute("DELETE FROM {email_template_strings}
-                          WHERE templateid NOT IN
-                          (SELECT id FROM {email_template})");
-            $DB->execute("DELETE FROM {email_templateset_template_strings}
-                          WHERE templatesetid NOT IN
-                          (SELECT id FROM {email_templateset_templates})");
         }
 
         // Email savepoint reached.
